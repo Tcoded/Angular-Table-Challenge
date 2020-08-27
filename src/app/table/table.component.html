@@ -1,0 +1,62 @@
+<button (click)="loadPosts()" *ngIf="!resReady" class="loadButton">Load Posts</button>
+
+<div *ngIf="resReady" class="containerElement">
+
+  <button (click)="clearStorage()" class="clearButton">Clear Local Storage</button>
+
+  <div class="searchContainer">
+    <label>
+      Filter table here:
+      <input
+        placeholder="Lorem Ipsum"
+        (keyup)="searchFilterHandler($event)"
+        value={{searchQuery}}
+      >
+    </label>
+  </div>
+
+  <div class="table">
+    <div
+      class="table-top"
+      cdkDropList
+      cdkDropListOrientation="horizontal"
+      (cdkDropListDropped)="drop($event)"
+    >
+      <div
+        class="table-box table-header"
+        *ngFor="let item of keys; index as i"
+        [ngStyle]="{'width': columnWidths[i] > 0 ? columnWidths[i] + 'px':'100px'}"
+        [ngClass]="{ 'activeSort': sortIndicator === i }"
+        (mousedown)="resizeColumn($event, i)"
+      >
+        <div class="drag-container" cdkDrag cdkDragLockAxis="x">
+          <a
+            href=""
+            (click)="columnSorting($event, i)"
+            class="table-header-key"
+          >
+            {{item}}
+          </a>
+          <span
+            class="sortorder"
+            [hidden]="sortIndicator !== i"
+            [ngClass]="{ descending:descending }"
+          >
+          </span>  
+        </div>
+      </div>
+    </div>
+    <div>
+      <div *ngFor="let data of results" class="table-list">
+        <div
+          *ngFor="let key of keys; index as i"
+          class="table-box"
+          [ngStyle]="{'width': columnWidths[i] > 0 ? columnWidths[i] + 'px':'100%'}"
+          [ngClass]="{ 'activeSort': sortIndicator === i }"
+        >
+          {{ (data[key].length>50) ? (data[key] | slice:0:48)+'...' : (data[key]) }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

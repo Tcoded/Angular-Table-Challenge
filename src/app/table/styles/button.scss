@@ -1,0 +1,9 @@
+@mixin btn($bgColor, $w) {
+    background-color: $bgColor;
+    width: $w;
+    text-align: center;
+    height: 30px;
+    display:inline-block;
+	cursor:pointer;
+	text-decoration:none;
+}
