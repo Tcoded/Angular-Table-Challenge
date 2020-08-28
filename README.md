@@ -44,7 +44,11 @@ The store state logic can be seperated from the presention layer to allow easier
 
 The current Component Store(CS) is a slightly different NgRx implementation of its more traditional counterpart in the global store. While the CS does allow some interesting optimization potential, most notably the ability to defer initialization to the associated component's initialization rather than being instanced at app start, it's very likely that a larger app will need to actually set up a global store for more effective state sharing between components. Thankfully, the CS is not mutually exclusive with the global store and the two can be used together if the use case is deemed sufficent.
 
-I only touched on some essential features of the component store like setting/retrieving state and using Effects to fetch HTTP requests, but the abilities can be expanded. The effects file can certainly be adapted to include more endpoints even with the JSON Placeholder site, such as pulling dummy users or nested queries like Users/Albums. The current app is only properly equipped to display single-level objects, but thankfully Effects allow a number of pipe operations that can transform data in all sorts of ways to make it more useful for component presentation.
+I only touched on some essential features of the component store like setting/retrieving state and using Effects to fetch HTTP requests, but the abilities can be expanded. The effects file can certainly be adapted to include more endpoints even with the JSON Placeholder site, such as pulling dummy users or nested queries like Users/Albums. The current app is only properly equipped to display single-level objects, but thankfully Effects allow a number of pipe operations that can transform data in all sorts of ways to make it more useful for component presentation. Setting up the proper reducers and selectors also allows for more robust state manipulation techniques like implementing paging.
+
+### Paging
+
+Even aside from the ease of using a paging implementation offered by the Angular CDK tables, setting up a custom solution shouldn't be too difficult. Throttling can occur at either the http request or the component state pull, although the later is probably more useful to limit potential http requests and allow filtering/transformations on data besides the currently displayed cells; either way, the user receives a limited portion of the data at any time, and then has the option to generate further rows of data at a time.
 
 ### Typing
 
